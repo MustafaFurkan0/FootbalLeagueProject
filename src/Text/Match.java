@@ -18,7 +18,7 @@ public class Match {
     public Match() {
     }
 
-    public void createFixtures(TeamList teamList, QueueTeam matchQueue, Hash hashTable) {
+    public QueueTeam createFixtures(TeamList teamList, QueueTeam matchQueue) {
         int totalTeams = teamList.size();
 
         // Takımları bir listeye aktar
@@ -34,12 +34,12 @@ public class Match {
             Team team1 = teams.get(i);
             Team team2 = teams.get(totalTeams - 1 - i);
             matchQueue.enqueue(new Match(team1, team2));
-            hashTable.ekle(i, teamList);
-            matchQueue.clear();
+
         }
+        rotateTeams(teams);
+        return matchQueue;
 
         // Bu hafta için eşleşmeleri tamamladıktan sonra, takımların sırasını kaydır
-        rotateTeams(teams);
     }
 
     // Listeyi bir pozisyon kaydırma

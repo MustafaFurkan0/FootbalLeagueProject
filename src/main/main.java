@@ -249,7 +249,7 @@ public class main extends javax.swing.JFrame {
         heap = new Heap();
 
         for (int i = 0; i < result.size(); i++) {
-            heap.add(result.get(i));
+            
 
         }
     }
@@ -325,7 +325,7 @@ public class main extends javax.swing.JFrame {
         teamlist.addTeam(team7);
         teamlist.addTeam(team8);
 
-        match.createFixtures(teamlist, matchQueue2, hashTable);
+       
         new main(hashTable, heap, matchQueue2);
     }
 

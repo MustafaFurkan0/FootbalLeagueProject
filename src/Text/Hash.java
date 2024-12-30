@@ -18,12 +18,11 @@ public class Hash {
 
     }
 
-    
     private int hashFunction(int key) {
         return key % 10;
     }
 
-    public void ekle(int key, TeamList teamList) {
+    public Node[] ekle(int key, TeamList teamList) {
         int index = hashFunction(key);
         Node newNode = new Node(teamList);
         // Bağlı listeye ekleme
@@ -36,6 +35,7 @@ public class Hash {
             }
             current.next = newNode; // Yeni düğümü sona ekle
         }
+        return hashTable;
 
     }
 
@@ -48,7 +48,5 @@ public class Hash {
         }
         return result;
     }
-    
-   
 
 }

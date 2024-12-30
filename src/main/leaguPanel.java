@@ -19,7 +19,9 @@ public class leaguPanel extends javax.swing.JPanel {
     private Heap heap = new Heap();
     private Match matchSimulator;
     private int currentweek = 0;
-    public Hash hashTable = new Hash(10);
+    public Hash hashTable = new Hash(8);
+    public Heap heapList = new Heap();
+    private ArrayList<Team> sortedTeam = new ArrayList<>();
 
     Team team1 = new Team("Besıktas", 1);
     Team team2 = new Team("Fenerbahce", 2);
@@ -48,7 +50,7 @@ public class leaguPanel extends javax.swing.JPanel {
         teamlist.addTeam(team7);
         teamlist.addTeam(team8);
 
-        match.createFixtures(teamlist, matchQueue2, hashTable);
+        match.createFixtures(teamlist, matchQueue2);
 
         goalTable.addRow(new Object[]{"Edin Dzeko", 9});
         goalTable.addRow(new Object[]{"Edin Dzeko", 9});
@@ -57,6 +59,28 @@ public class leaguPanel extends javax.swing.JPanel {
         resultTable.addRow(new Object[]{"Fennerbahçe", "2 - 1", "Galatasaray"});
         resultTable.addRow(new Object[]{"Fennerbahçe", "2 - 1", "Galatasaray"});
         resultTable.addRow(new Object[]{"Fennerbahçe", "2 - 1", "Galatasaray"});
+        
+        
+        simulateWeek(matchQueue2, teamlist);
+        TeamList result = hashTable.hashMethod(teamlist, currentweek);
+
+        heap = new Heap();
+        
+        
+        for (int i = 0; i < result.size(); i++) {
+            Team currentTeam = result.get(i);
+             
+            // Eğer takım zaten listede varsa, mevcut puanına ve gol farkına ekleme yapılır
+            
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            heap.add(result.get(i));
+        }
+        
+        
+        
+
 
     }
 
@@ -239,49 +263,28 @@ public class leaguPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-
-        simulateWeek(matchQueue2, hashTable, teamlist);
-        TeamList result = hashTable.hashMethod(teamlist, currentweek);
-
-        heap = new Heap();
-        // Haftalık sonuçları heap yapısına ekleyerek sıralama yapılır
-        for (int i = 0; i < result.size(); i++) {
-            Team currentTeam = result.get(i);
-
-            // Eğer takım zaten listede varsa, mevcut puanına ve gol farkına ekleme yapılır
-            Team existingTeam = teamlist.getTeamById(currentTeam.getTeamId());
-            if (existingTeam != null) {
-                // Puan ve gol farkı ekleme
-                existingTeam.setTotalPoints(existingTeam.getTotalPoints() + currentTeam.getTotalPoints());
-                existingTeam.setGoalDifference(currentTeam.getGoalDifference());  // Gol farkı ekleme
-            } else {
-                teamlist.addTeam(currentTeam);  // Yeni takım ise listeye ekle
-            }
-        }
-
-        for (int i = 0; i < result.size(); i++) {
-            heap.add(result.get(i));
-        }
-        // Ağacı sıralı bir listeye dönüştür
-        List<Heap.TeamNode> sortedList = new ArrayList<>();
-        while (!heap.isEmpty()) {
-            sortedList.add(heap.extractMax());  // En büyük elemanı çıkar ve listeye ekle
-        }
-
+        //Hashtabledan haftanın verilerini alıp heapde saklamak TeamList teamlist= hashTable[index]; for döngüsünde 
         leagueTable.clearRow();
         // Sıralı listeyi yazdır veya işle
-        for (Heap.TeamNode node : sortedList) {
-            leagueTable.addRow(new Object[]{node.getIsim(), node.getPuan(), node.getAverage()});
+        for (int i = 0; i < 8; i++) {
+            sortedTeam = heapList.getSortedListHeap();
+            Team team = sortedTeam.get(i);
+            leagueTable.addRow(new Object[]{team.getName(), team.getTotalPoints(), team.getGoalDifference()});
         }
-
+        //*******************************************************************************************;
+        
+        
+        
+       
 
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void leagueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leagueButtonActionPerformed
+
         
     }//GEN-LAST:event_leagueButtonActionPerformed
 
-    public void simulateWeek(QueueTeam matchQueue, Hash hashTable, TeamList teamlist) {
+    public void simulateWeek(QueueTeam matchQueue, TeamList teamlist) {
         // 1. Haftanın maçlarını oyna
         for (int i = 0; i < 8; i++) {
             Match match = matchQueue2.dequeue();
@@ -289,7 +292,7 @@ public class leaguPanel extends javax.swing.JPanel {
                 break; // Maç yoksa işlemi sonlandır
             }
             match.simulate();
-            hashTable.ekle(currentweek, teamlist);
+         
 
         }
     }
