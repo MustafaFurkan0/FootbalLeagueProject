@@ -11,25 +11,7 @@ public class main extends javax.swing.JFrame {
     private teamPanel teamPanel;
     private leaguPanel leaguepanel;
 
-    public TeamList teamlist = new TeamList();
-    private QueueTeam queue = new QueueTeam();
-    private Match matchQueue = new Match();
-    private ArrayList<Team> teams = new ArrayList<>();
-    private Heap heap;
-    private Match matchSimulator;
-    private int currentweek = 0;
     public Hash hashTable;
-
-    public BST bst = new BST();
-
-    Team team1 = new Team("Besıktas", 1);
-    Team team2 = new Team("Fenerbahce", 2);
-    Team team3 = new Team("Galatasaray", 3);
-    Team team4 = new Team("Samsunspor", 4);
-    Team team5 = new Team("Bursaspor", 5);
-    Team team6 = new Team("Barcelona", 6);
-    Team team7 = new Team("Real Madrıd", 7);
-    Team team8 = new Team("Lıverpool", 8);
 
     public main() {
         initComponents();
@@ -43,23 +25,6 @@ public class main extends javax.swing.JFrame {
         cardLayout.show(mainPanel, "leaguePanel");
         backLeague.setVisible(false);
 
-        bst.insert(team1);
-        bst.insert(team2);
-        bst.insert(team3);
-        bst.insert(team4);
-        bst.insert(team5);
-        bst.insert(team6);
-        bst.insert(team7);
-        bst.insert(team8);
-
-    }
-
-    public main(Hash hashTable, Heap heap, QueueTeam matchQueue) {
-        initComponents();
-        this.hashTable = (hashTable != null) ? hashTable : new Hash(10); // Eğer null ise yeni bir Hash nesnesi oluştur
-        this.heap = heap;
-        this.queue = matchQueue;
-        this.currentweek = 1;
     }
 
     public JPanel getMainPanel() {
@@ -231,30 +196,6 @@ public class main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void simulateWeek() {
-        // 1. Haftanın maçlarını oyna
-        for (int i = 0; i < 8; i++) {
-            Match match = queue.dequeue();
-            if (match == null) {
-                break; // Maç yoksa işlemi sonlandır
-            }
-            match.simulate();
-            hashTable.ekle(i + 1, teamlist);
-
-        }
-
-        // 2. Heap sıralamasını güncelle
-        TeamList result = new TeamList();
-        result = hashTable.hashMethod(teamlist, currentweek);
-        heap = new Heap();
-
-        for (int i = 0; i < result.size(); i++) {
-            
-
-        }
-    }
-
-
     private void searchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextActionPerformed
 
     }//GEN-LAST:event_searchTextActionPerformed
@@ -301,32 +242,6 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        Hash hashTable = new Hash(10);
-        Heap heap = new Heap();
-        Match match = new Match();
-        TeamList teamlist = new TeamList();
-        QueueTeam matchQueue2 = new QueueTeam();
-
-        Team team1 = new Team("Besıktas", 1);
-        Team team2 = new Team("Fenerbahce", 2);
-        Team team3 = new Team("Galatasaray", 3);
-        Team team4 = new Team("Samsunspor", 4);
-        Team team5 = new Team("Bursaspor", 5);
-        Team team6 = new Team("Barcelona", 6);
-        Team team7 = new Team("Real Madrıd", 7);
-        Team team8 = new Team("Lıverpool", 8);
-
-        teamlist.addTeam(team1);
-        teamlist.addTeam(team2);
-        teamlist.addTeam(team3);
-        teamlist.addTeam(team4);
-        teamlist.addTeam(team5);
-        teamlist.addTeam(team6);
-        teamlist.addTeam(team7);
-        teamlist.addTeam(team8);
-
-       
-        new main(hashTable, heap, matchQueue2);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

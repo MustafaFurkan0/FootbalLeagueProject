@@ -47,7 +47,7 @@ public class TeamList {
             if (temp.team.getTeamId() == teamID) {
                 temp.team.setName(newName);
                 temp.team.setTotalPoints(newPoints);
-                temp.team.setGoalDifference(newGoalDifference);
+
                 return;
             }
             temp = temp.next;
@@ -96,4 +96,5 @@ public class TeamList {
     public Node getHead() {
         return head;
     }
+
 }

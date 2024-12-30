@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Heap {
 
     public ArrayList<Team> heap;
-    public ArrayList<Team> sortedList = new ArrayList<>();
+    public TeamList sortedList = new TeamList();
 
     public Heap() {
         heap = new ArrayList<>();
@@ -27,7 +27,7 @@ public class Heap {
             }
         }
     }
-
+  
     // Max elemanı çıkarma (Heap'in kökü)
     public Team extractMax() {
         if (heap.isEmpty()) {
@@ -83,14 +83,17 @@ public class Heap {
     }
 
     // Heap'ten sıralı bir liste döndür (Heap boşalır)
-    public ArrayList<Team> getSortedListHeap() {
+    public TeamList getSortedListHeap() {
         while (!heap.isEmpty()) {
             Team temp = extractMax();
-            sortedList.add(temp);
+            sortedList.addTeam(temp);
         }
-        return sortedList;
+        return sortedList ;
     }
-
+   public void clear() {
+        heap.clear(); // Heap içindeki tüm elemanları temizle
+        sortedList = new TeamList(); // Sıralı listeyi yeni bir TeamList olarak sıfırla
+    }
     // Heap'i yazdır
     public void printHeap() {
         for (Team team : heap) {

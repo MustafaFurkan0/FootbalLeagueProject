@@ -9,20 +9,16 @@ import java.util.*;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class leaguPanel extends javax.swing.JPanel {
 
-    private TeamList teamlist = new TeamList();
-    private QueueTeam matchQueue2 = new QueueTeam();
-    private Match match = new Match();
-    private ArrayList<Team> teams = new ArrayList<>();
-    private Heap heap = new Heap();
-    private Match matchSimulator;
-    private int currentweek = 0;
-    public Hash hashTable = new Hash(8);
-    public Heap heapList = new Heap();
-    private ArrayList<Team> sortedTeam = new ArrayList<>();
-
+    public MyStack stack = new MyStack();
+    public TeamList teamlist = new TeamList();
+    public Match match = new Match();
+    public Heap heap = new Heap();
+    public Hash hash = new Hash(teamlist.size());
+    int currentweek = 0;
     Team team1 = new Team("Besıktas", 1);
     Team team2 = new Team("Fenerbahce", 2);
     Team team3 = new Team("Galatasaray", 3);
@@ -36,11 +32,6 @@ public class leaguPanel extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
 
-        this.currentweek = 0;
-        this.hashTable = hashTable;
-        this.matchQueue2 = matchQueue2;
-        this.heap = heap;
-
         teamlist.addTeam(team1);
         teamlist.addTeam(team2);
         teamlist.addTeam(team3);
@@ -49,38 +40,6 @@ public class leaguPanel extends javax.swing.JPanel {
         teamlist.addTeam(team6);
         teamlist.addTeam(team7);
         teamlist.addTeam(team8);
-
-        match.createFixtures(teamlist, matchQueue2);
-
-        goalTable.addRow(new Object[]{"Edin Dzeko", 9});
-        goalTable.addRow(new Object[]{"Edin Dzeko", 9});
-        goalTable.addRow(new Object[]{"Edin Dzeko", 9});
-        resultTable.addRow(new Object[]{"Fennerbahçe", "2 - 1", "Galatasaray"});
-        resultTable.addRow(new Object[]{"Fennerbahçe", "2 - 1", "Galatasaray"});
-        resultTable.addRow(new Object[]{"Fennerbahçe", "2 - 1", "Galatasaray"});
-        resultTable.addRow(new Object[]{"Fennerbahçe", "2 - 1", "Galatasaray"});
-        
-        
-        simulateWeek(matchQueue2, teamlist);
-        TeamList result = hashTable.hashMethod(teamlist, currentweek);
-
-        heap = new Heap();
-        
-        
-        for (int i = 0; i < result.size(); i++) {
-            Team currentTeam = result.get(i);
-             
-            // Eğer takım zaten listede varsa, mevcut puanına ve gol farkına ekleme yapılır
-            
-        }
-
-        for (int i = 0; i < result.size(); i++) {
-            heap.add(result.get(i));
-        }
-        
-        
-        
-
 
     }
 
@@ -148,7 +107,7 @@ public class leaguPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Match Result", "", ""
+                "Match Result", "1", "2"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -263,43 +222,63 @@ public class leaguPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        //Hashtabledan haftanın verilerini alıp heapde saklamak TeamList teamlist= hashTable[index]; for döngüsünde 
-        leagueTable.clearRow();
-        // Sıralı listeyi yazdır veya işle
-        for (int i = 0; i < 8; i++) {
-            sortedTeam = heapList.getSortedListHeap();
-            Team team = sortedTeam.get(i);
-            leagueTable.addRow(new Object[]{team.getName(), team.getTotalPoints(), team.getGoalDifference()});
+        QueueTeam queue = new QueueTeam();
+        heap.clear();
+        DefaultTableModel model = (DefaultTableModel) leagueTable.getModel();
+        model.setRowCount(0);
+        DefaultTableModel model1 = (DefaultTableModel) resultTable.getModel();
+        model1.setRowCount(0);
+
+        int totalTeams = teamlist.size();
+        if (totalTeams % 2 != 0) {
+            throw new IllegalArgumentException("Takım sayısı çift olmalıdır.");
         }
-        //*******************************************************************************************;
-        
-        
-        
-       
+
+        for (int i = 0; i < totalTeams / 2; i++) {
+            Team team1 = teamlist.get(i);
+            Team team2 = teamlist.get(totalTeams - 1 - i);
+            queue.enqueue(new Match(team1, team2));
+        }
+        for (int i = 0; i < teamlist.size() / 2; i++) {
+            Match match = queue.dequeue();
+            stack.push(match);
+            Team team1 = match.team1;
+            Team team2 = match.team2;
+            heap.add(team1);
+            heap.add(team2);
+        }
+
+        match.rotateTeams(teamlist);
+        TeamList listyeni = heap.getSortedListHeap();
+        Node temp = listyeni.head;
+        while (temp != null) {
+            leagueTable.addRow(new Object[]{temp.team.name, temp.team.totalPoints, temp.team.goalDifference, temp.team.form});
+            temp = temp.next; // Bir sonraki düğüme geç
+        }
+        for (int i = 0; i < 4; i++) {
+            Match matchstack = stack.pop();
+            resultTable.addRow(new Object[]{matchstack.team1.name, matchstack.getTeam1Score() + " - " + matchstack.getTeam2Score(), matchstack.team2.name});
+        }
+
 
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void leagueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leagueButtonActionPerformed
-
+        /*
+        ArrayList<Team> teamsArray = new ArrayList<>();
+        Node current = teamlist.getHead();
+        while (current != null) {
+            teamsArray.add(current.team);
+            current = current.next;
+        }
+        ArrayList<Team> teamMix = match.rotateTeams(teamsArray);
         
+        match.createFixtures(teamlist)
+         */
     }//GEN-LAST:event_leagueButtonActionPerformed
 
-    public void simulateWeek(QueueTeam matchQueue, TeamList teamlist) {
-        // 1. Haftanın maçlarını oyna
-        for (int i = 0; i < 8; i++) {
-            Match match = matchQueue2.dequeue();
-            if (match == null) {
-                break; // Maç yoksa işlemi sonlandır
-            }
-            match.simulate();
-         
-
-        }
-    }
-
-    public void printTable(int i, String name, int point, int average) {
-        leagueTable.addRow(new Object[]{i, name, point, average});
-
+    public JButton getNextButton() {
+        return nextButton;
     }
 
     public JButton getLeagueButton() {

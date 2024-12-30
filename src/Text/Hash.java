@@ -7,11 +7,11 @@ public class Hash {
 
     TeamList teamList;
     int size;
-    Node[] hashTable;
+    TeamList[] hashTable;
 
     public Hash(int size) {
         this.size = size;
-        hashTable = new Node[size];
+        hashTable = new TeamList[size];
         for (int i = 0; i < size; i++) {
             hashTable[i] = null;
         }
@@ -22,8 +22,10 @@ public class Hash {
         return key % 10;
     }
 
-    public Node[] ekle(int key, TeamList teamList) {
+    public void ekle(int key, TeamList teamList) {
         int index = hashFunction(key);
+        hashTable[index] = teamList;
+        /*
         Node newNode = new Node(teamList);
         // Bağlı listeye ekleme
         if (hashTable[index] == null) {
@@ -35,8 +37,12 @@ public class Hash {
             }
             current.next = newNode; // Yeni düğümü sona ekle
         }
-        return hashTable;
+         */
+    }
 
+    public TeamList get(int key) {
+        int index = key % hashTable.length;
+        return hashTable[index];
     }
 
     public TeamList hashMethod(TeamList teamList, int weekNumber) {

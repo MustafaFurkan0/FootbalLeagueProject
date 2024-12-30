@@ -1,10 +1,10 @@
 package Text;
 
-public class Stack {
+public class MyStack {
 
     private Node top;
 
-    public Stack() {
+    public MyStack() {
         top = null;
     }
 
