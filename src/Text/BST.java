@@ -1,13 +1,15 @@
 package Text;
 
+import javax.swing.JOptionPane;
+
 public class BST {
 
     public class BstNode {
 
-        public String name;  // Takım veya oyuncunun adı
-        public Team team;    // Takım bilgisi
-        public BstNode left; // Sol çocuk düğüm
-        public BstNode right; // Sağ çocuk düğüm
+        public String name;
+        public Team team;
+        public BstNode left;
+        public BstNode right;
 
         public BstNode(Team team) {
             this.name = team.getName();
@@ -17,10 +19,10 @@ public class BST {
         }
     }
 
-    public BstNode root; // Ağacın kök düğümü
+    public BstNode root;
 
     public BST() {
-        this.root = null; // Başlangıçta kök düğüm boş
+        this.root = null;
     }
 
     private int compareStrings(String str1, String str2) {
@@ -30,7 +32,7 @@ public class BST {
     public void insert(Team team) {
         BstNode newNode = new BstNode(team);
         if (root == null) {
-            root = newNode; // Eğer ağaç boşsa, kök düğüm olarak ekle
+            root = newNode;
         } else {
             root = insertRecursive(root, newNode);
         }
@@ -38,20 +40,23 @@ public class BST {
 
     private BstNode insertRecursive(BstNode current, BstNode newNode) {
         if (current == null) {
-            return newNode; // Uygun bir yere düğümü ekle
+            return newNode;
         }
 
         if (compareStrings(newNode.team.getName(), current.team.getName()) < 0) {
-            current.left = insertRecursive(current.left, newNode); // Sol dal
+            current.left = insertRecursive(current.left, newNode);
         } else {
-            current.right = insertRecursive(current.right, newNode); // Sağ dal
+            current.right = insertRecursive(current.right, newNode);
         }
         return current;
     }
 
     public BstNode search(String name) {
-
-        return searchRecursive(root, name);
+        BstNode result = searchRecursive(root, name);
+        if (result == null) {
+            JOptionPane.showMessageDialog(null, "THE TEAM İS NOT FOUND, PLEASE TRY AGAİN !!", "Celal Bayar League", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return result;
     }
 
     private BstNode searchRecursive(BstNode current, String name) {

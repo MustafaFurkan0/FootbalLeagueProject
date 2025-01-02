@@ -11,36 +11,32 @@ public class Heap {
         heap = new ArrayList<>();
     }
 
-    // Eleman ekleme
     public void add(Team team) {
-        heap.add(team); // Yeni takımı sonuna ekle
+        heap.add(team);
 
-        // Yukarı doğru manuel düzenleme
         int index = heap.size() - 1;
         while (index > 0) {
             int parentIndex = (index - 1) / 2;
             if (compare(heap.get(index), heap.get(parentIndex)) > 0) { // Eğer çocuk daha büyükse
-                swap(index, parentIndex); // Yer değiştir
-                index = parentIndex; // Yeni indeks ebeveyn
+                swap(index, parentIndex);
+                index = parentIndex;
             } else {
                 break;
             }
         }
     }
-  
-    // Max elemanı çıkarma (Heap'in kökü)
+
     public Team extractMax() {
         if (heap.isEmpty()) {
             throw new IllegalStateException("Heap is empty");
         }
 
-        Team max = heap.get(0); // Kök eleman
-        Team last = heap.remove(heap.size() - 1); // Son elemanı çıkar
+        Team max = heap.get(0);
+        Team last = heap.remove(heap.size() - 1);
 
         if (!heap.isEmpty()) {
-            heap.set(0, last); // Son elemanı köke taşı
+            heap.set(0, last);
 
-            // Aşağı doğru manuel düzenleme
             int index = 0;
             while (true) {
                 int leftChild = 2 * index + 1;
@@ -66,38 +62,31 @@ public class Heap {
         return max;
     }
 
-    // Takımların karşılaştırmasını yapan yardımcı metot
     private int compare(Team t1, Team t2) {
         if (t1.getTotalPoints() != t2.getTotalPoints()) {
-            return t1.getTotalPoints() - t2.getTotalPoints(); // Puan farkına göre karşılaştırma
+            return t1.getTotalPoints() - t2.getTotalPoints();
         } else {
-            return t1.getGoalDifference() - t2.getGoalDifference(); // Puan eşitse gol farkına göre
+            return t1.getGoalDifference() - t2.getGoalDifference();
         }
     }
 
-    // İki takımın yerini değiştir
     private void swap(int i, int j) {
         Team temp = heap.get(i);
         heap.set(i, heap.get(j));
         heap.set(j, temp);
     }
 
-    // Heap'ten sıralı bir liste döndür (Heap boşalır)
     public TeamList getSortedListHeap() {
         while (!heap.isEmpty()) {
             Team temp = extractMax();
             sortedList.addTeam(temp);
         }
-        return sortedList ;
+        return sortedList;
     }
-   public void clear() {
-        heap.clear(); // Heap içindeki tüm elemanları temizle
-        sortedList = new TeamList(); // Sıralı listeyi yeni bir TeamList olarak sıfırla
+
+    public void clear() {
+        heap.clear();
+        sortedList = new TeamList();
     }
-    // Heap'i yazdır
-    public void printHeap() {
-        for (Team team : heap) {
-            System.out.println(team.getName() + " - Puan: " + team.getTotalPoints() + ", Average: " + team.getGoalDifference());
-        }
-    }
+
 }

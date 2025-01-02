@@ -1,18 +1,17 @@
 package main;
 
 import Text.*;
-import Text.BST.BstNode;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class teamPanel extends javax.swing.JPanel {
 
-    private main mainFrame;
-
     Team team;
     PlayerList tempList;
     Node temp;
+    private Hash hash = new Hash(10);
+    public Match match = new Match();
+
     String nameArray[] = new String[11];
     String positionArray[] = new String[11];
     int ıdArray[] = new int[11];
@@ -29,110 +28,110 @@ public class teamPanel extends javax.swing.JPanel {
     public BST bst = new BST();
     public PlayerList playerlist = new PlayerList();
 
-    Team team1 = new Team("Besıktas", 1);
-    Team team2 = new Team("Fenerbahce", 2);
-    Team team3 = new Team("Galatasaray", 3);
-    Team team4 = new Team("Samsunspor", 4);
-    Team team5 = new Team("Bursaspor", 5);
-    Team team6 = new Team("Real Madrıd", 6);
-    Team team7 = new Team("Lıverpool", 7);
-    Team team8 = new Team("Barcelona", 8);
+    public Team team1 = new Team("Besıktas", 1);
+    public Team team2 = new Team("Fenerbahce", 2);
+    public Team team3 = new Team("Galatasaray", 3);
+    public Team team4 = new Team("Samsunspor", 4);
+    public Team team5 = new Team("Bursaspor", 5);
+    public Team team6 = new Team("Real Madrıd", 6);
+    public Team team7 = new Team("Lıverpool", 7);
+    public Team team8 = new Team("Barcelona", 8);
 
-    Player team1player1 = new Player(team1, 1, "Mert Günok", "Goalkeeper");
-    Player team1player2 = new Player(team1, 2, "Valentin Rosier", "Right Back");
-    Player team1player3 = new Player(team1, 3, "Wellington", "Center Back");
-    Player team1player4 = new Player(team1, 4, "Kim Min-jae", "Center Back");
-    Player team1player5 = new Player(team1, 5, "Rıdvan Yılmaz", "Left Back");
-    Player team1player6 = new Player(team1, 6, "Atiba Hutchinson", "Defensive Midfield");
-    Player team1player7 = new Player(team1, 7, "Tayfur Bingöl", "Central Midfield");
-    Player team1player8 = new Player(team1, 8, "Alexis Pérez", "Central Midfield");
-    Player team1player9 = new Player(team1, 9, "Cyle Larin", "Left Wing");
-    Player team1player10 = new Player(team1, 10, "Wout Weghorst", "Striker");
-    Player team1player11 = new Player(team1, 11, "Rachid Ghezzal", "Right Wing");
+    Player team1player1 = new Player(team1, 34, "Mert Günok", "Goalkeeper");
+    Player team1player2 = new Player(team1, 2, "Jonas Svensson", "Right Back");
+    Player team1player3 = new Player(team1, 14, "Felix Uduokhai", "Center Back");
+    Player team1player4 = new Player(team1, 53, "Emirhan Topçu", "Center Back");
+    Player team1player5 = new Player(team1, 26, "Arthur Masuaku", "Left Back");
+    Player team1player6 = new Player(team1, 6, "Al-Musrati", "Defensive Midfield");
+    Player team1player7 = new Player(team1, 8, "Salih Uçan", "Central Midfield");
+    Player team1player8 = new Player(team1, 83, "Gedson Fernandes", "Central Midfield");
+    Player team1player9 = new Player(team1, 27, "Rafa Silva", "Left Wing");
+    Player team1player10 = new Player(team1, 9, "Semih Kılıçsoy", "Striker");
+    Player team1player11 = new Player(team1, 23, "Ernest Muçi", "Right Wing");
 
-    Player team2player1 = new Player(team2, 1, "Altay Bayındır", "Goalkeeper");
-    Player team2player2 = new Player(team2, 2, "Nazım Sangaré", "Right Back");
-    Player team2player3 = new Player(team2, 3, "Serdar Aziz", "Center Back");
-    Player team2player4 = new Player(team2, 4, "Attila Szalai", "Center Back");
-    Player team2player5 = new Player(team2, 5, "Ferdi Kadıoğlu", "Left Back");
-    Player team2player6 = new Player(team2, 6, "Mert Hakan Yandaş", "Central Midfielder");
-    Player team2player7 = new Player(team2, 7, "İsmail Yüksek", "Central Midfielder");
-    Player team2player8 = new Player(team2, 8, "Enner Valencia", "Attacking Midfielder");
-    Player team2player9 = new Player(team2, 9, "Jorge Jesús", "Right Wing");
-    Player team2player10 = new Player(team2, 10, "Michy Batshuayi", "Striker");
-    Player team2player11 = new Player(team2, 11, "İrfan Can Kahveci", "Left Wing");
+    Player team2player1 = new Player(team2, 40, "Dominik Livakovic", "Goalkeeper");
+    Player team2player2 = new Player(team2, 2, "Çağlar Söyüncü", "Center Back");
+    Player team2player3 = new Player(team2, 6, "Alexander Djiku", "Center Back");
+    Player team2player4 = new Player(team2, 16, "Mert Müldür", "Right Back");
+    Player team2player5 = new Player(team2, 24, "Jayden Oosterwolde", "Left Back");
+    Player team2player6 = new Player(team2, 5, "İsmail Yüksek", "Defensive Midfield");
+    Player team2player7 = new Player(team2, 10, "Dusan Tadic", "Attacking Midfield");
+    Player team2player8 = new Player(team2, 13, "Fred", "Central Midfield");
+    Player team2player9 = new Player(team2, 53, "Sebastian Szymanski", "Left Wing");
+    Player team2player10 = new Player(team2, 9, "Edin Dzeko", "Striker");
+    Player team2player11 = new Player(team2, 97, "Allan Saint-Maximin", "Right Wing");
 
     Player team3player1 = new Player(team3, 1, "Fernando Muslera", "Goalkeeper");
-    Player team3player2 = new Player(team3, 2, "Sacha Boey", "Right Back");
-    Player team3player3 = new Player(team3, 3, "Victor Nelsson", "Center Back");
-    Player team3player4 = new Player(team3, 4, "Marcao", "Center Back");
-    Player team3player5 = new Player(team3, 5, "Patrick Van Aanholt", "Left Back");
-    Player team3player6 = new Player(team3, 6, "Taylan Antalyalı", "Defensive Midfielder");
-    Player team3player7 = new Player(team3, 7, "Juan Mata", "Central Midfielder");
-    Player team3player8 = new Player(team3, 8, "Okan Kocuk", "Central Midfielder");
-    Player team3player9 = new Player(team3, 9, "Kerem Aktürkoğlu", "Left Wing");
-    Player team3player10 = new Player(team3, 10, "Mauro Icardi", "Striker");
-    Player team3player11 = new Player(team3, 11, "Dries Mertens", "Right Wing");
+    Player team3player2 = new Player(team3, 4, "Ismail Jakobs", "Left Back");
+    Player team3player3 = new Player(team3, 6, "Davinson Sanchez", "Center Back");
+    Player team3player4 = new Player(team3, 23, "Kaan Ayhan", "Center Back");
+    Player team3player5 = new Player(team3, 42, "Abdülkerim Bardakçı", "Left Center Back");
+    Player team3player6 = new Player(team3, 20, "Gabriel Sara", "Central Midfield");
+    Player team3player7 = new Player(team3, 34, "Lucas Torreira", "Defensive Midfield");
+    Player team3player8 = new Player(team3, 10, "Dries Mertens", "Attacking Midfield");
+    Player team3player9 = new Player(team3, 11, "Yunus Akgün", "Right Wing");
+    Player team3player10 = new Player(team3, 45, "Victor Osimhen", "Striker");
+    Player team3player11 = new Player(team3, 53, "Barış Alper Yılmaz", "Left Wing");
 
-    Player team4player1 = new Player(team4, 1, "Samet Aybaba", "Goalkeeper");
-    Player team4player2 = new Player(team4, 2, "Alpay Özalan", "Right Back");
-    Player team4player3 = new Player(team4, 3, "Aytaç Kara", "Center Back");
-    Player team4player4 = new Player(team4, 4, "Emre Çolak", "Center Back");
-    Player team4player5 = new Player(team4, 5, "Tuncay Şanlı", "Left Back");
-    Player team4player6 = new Player(team4, 6, "Ali Akman", "Central Midfielder");
-    Player team4player7 = new Player(team4, 7, "Lamine Diack", "Central Midfielder");
-    Player team4player8 = new Player(team4, 8, "Ahmet Sivri", "Attacking Midfielder");
-    Player team4player9 = new Player(team4, 9, "Uğur Çiftçi", "Left Wing");
-    Player team4player10 = new Player(team4, 10, "Mehmet Akyüz", "Striker");
-    Player team4player11 = new Player(team4, 11, "Yusuf Yazıcı", "Right Wing");
+    Player team4player1 = new Player(team4, 1, "Okan Kocuk", "Goalkeeper");
+    Player team4player2 = new Player(team4, 4, "Rick Van Drongelen", "Center Back");
+    Player team4player3 = new Player(team4, 16, "Marc Bola", "Left Back");
+    Player team4player4 = new Player(team4, 18, "Zeki Yavru", "Right Back");
+    Player team4player5 = new Player(team4, 37, "Lubo Satka", "Center Back");
+    Player team4player6 = new Player(team4, 6, "Youssef Ait Bennasser", "Defensive Midfield");
+    Player team4player7 = new Player(team4, 10, "Olivier Ntcham", "Attacking Midfield");
+    Player team4player8 = new Player(team4, 21, "Carlo Holse", "Right Wing");
+    Player team4player9 = new Player(team4, 7, "Arbnor Muja", "Left Wing");
+    Player team4player10 = new Player(team4, 9, "Marius Mouandilmadji", "Striker");
+    Player team4player11 = new Player(team4, 14, "Landry Dimata", "Striker");
 
-    Player team5player1 = new Player(team5, 1, "Okan Kocuk", "Goalkeeper");
-    Player team5player2 = new Player(team5, 2, "Kerem Can Akyüz", "Right Back");
-    Player team5player3 = new Player(team5, 3, "Ali Tandoğan", "Center Back");
-    Player team5player4 = new Player(team5, 4, "Murat Akyüz", "Center Back");
-    Player team5player5 = new Player(team5, 5, "Barış Yardımcı", "Left Back");
-    Player team5player6 = new Player(team5, 6, "Burak Altıparmak", "Central Midfielder");
-    Player team5player7 = new Player(team5, 7, "Emre Taşdemir", "Central Midfielder");
-    Player team5player8 = new Player(team5, 8, "Aykut Akgün", "Attacking Midfielder");
-    Player team5player9 = new Player(team5, 9, "Leandro Kappel", "Left Wing");
-    Player team5player10 = new Player(team5, 10, "Enes Ünal", "Striker");
-    Player team5player11 = new Player(team5, 11, "Muhammed Şengezer", "Right Wing");
+    Player team5player1 = new Player(team5, 1, "Anıl Atağ", "Goalkeeper");
+    Player team5player2 = new Player(team5, 3, "Abdullah Tazgel", "Left Back");
+    Player team5player3 = new Player(team5, 5, "Taha Can Velioğlu", "Center Back");
+    Player team5player4 = new Player(team5, 22, "Eren Tunalı", "Right Back");
+    Player team5player5 = new Player(team5, 27, "Mehmet Yiğit", "Center Back");
+    Player team5player6 = new Player(team5, 9, "Ahmet İlhan Özek", "Right Wing");
+    Player team5player7 = new Player(team5, 11, "İlhan Depe", "Left Wing");
+    Player team5player8 = new Player(team5, 15, "Yiğit Ali Bayrak", "Attacking Midfield");
+    Player team5player9 = new Player(team5, 35, "Musa Çağıran", "Defensive Midfield");
+    Player team5player10 = new Player(team5, 10, "Muhammet Demir", "Striker");
+    Player team5player11 = new Player(team5, 16, "Sedat Cengiz", "Central Midfield");
 
     Player team6player1 = new Player(team6, 1, "Thibaut Courtois", "Goalkeeper");
     Player team6player2 = new Player(team6, 2, "Dani Carvajal", "Right Back");
-    Player team6player3 = new Player(team6, 3, "Éder Militão", "Center Back");
-    Player team6player4 = new Player(team6, 4, "David Alaba", "Center Back");
-    Player team6player5 = new Player(team6, 5, "Ferland Mendy", "Left Back");
-    Player team6player6 = new Player(team6, 6, "Casemiro", "Defensive Midfielder");
-    Player team6player7 = new Player(team6, 7, "Luka Modrić", "Central Midfielder");
-    Player team6player8 = new Player(team6, 8, "Toni Kroos", "Central Midfielder");
-    Player team6player9 = new Player(team6, 9, "Vinícius Júnior", "Left Wing");
-    Player team6player10 = new Player(team6, 10, "Karim Benzema", "Striker");
+    Player team6player3 = new Player(team6, 3, "Eder Militao", "Center Back");
+    Player team6player4 = new Player(team6, 22, "Antonio Rüdiger", "Center Back");
+    Player team6player5 = new Player(team6, 8, "Federico Valverde", "Central Midfield");
+    Player team6player6 = new Player(team6, 14, "Aurelien Tchouameni", "Defensive Midfield");
+    Player team6player7 = new Player(team6, 15, "Arda Güler", "Attacking Midfield");
+    Player team6player8 = new Player(team6, 20, "Francisco Garcia", "Left Back");
+    Player team6player9 = new Player(team6, 7, "Junior Vinicius", "Left Wing");
+    Player team6player10 = new Player(team6, 9, "Kylian Mbappe", "Striker");
     Player team6player11 = new Player(team6, 11, "Rodrygo", "Right Wing");
 
-    Player team7player1 = new Player(team7, 1, "Alisson Becker", "Goalkeeper");
-    Player team7player2 = new Player(team7, 2, "Trent Alexander-Arnold", "Right Back");
-    Player team7player3 = new Player(team7, 3, "Virgil van Dijk", "Center Back");
-    Player team7player4 = new Player(team7, 4, "Ibrahima Konaté", "Center Back");
-    Player team7player5 = new Player(team7, 5, "Andrew Robertson", "Left Back");
-    Player team7player6 = new Player(team7, 6, "Fabinho", "Defensive Midfielder");
-    Player team7player7 = new Player(team7, 7, "Jordan Henderson", "Central Midfielder");
-    Player team7player8 = new Player(team7, 8, "Thiago Alcântara", "Central Midfielder");
-    Player team7player9 = new Player(team7, 9, "Mohamed Salah", "Right Wing");
-    Player team7player10 = new Player(team7, 10, "Darwin Núñez", "Striker");
-    Player team7player11 = new Player(team7, 11, "Luis Díaz", "Left Wing");
+    Player team7player1 = new Player(team7, 1, "Alisson", "Goalkeeper");
+    Player team7player2 = new Player(team7, 4, "Virgil van Dijk", "Center Back");
+    Player team7player3 = new Player(team7, 5, "Ibrahima Konate", "Center Back");
+    Player team7player4 = new Player(team7, 26, "Andrew Robertson", "Left Back");
+    Player team7player5 = new Player(team7, 66, "Trent Alexander-Arnold", "Right Back");
+    Player team7player6 = new Player(team7, 7, "Luis Diaz", "Left Wing");
+    Player team7player7 = new Player(team7, 8, "Dominik Szoboszlai", "Central Midfield");
+    Player team7player8 = new Player(team7, 10, "Alexis Mac Allister", "Central Midfield");
+    Player team7player9 = new Player(team7, 20, "Diogo Jota", "Right Wing");
+    Player team7player10 = new Player(team7, 38, "Ryan Gravenberch", "Central Midfield");
+    Player team7player11 = new Player(team7, 11, "Mohamed Salah", "Right Wing");
 
-    Player team8player1 = new Player(team8, 1, "Marc-André ter Stegen", "Goalkeeper");
-    Player team8player2 = new Player(team8, 2, "Sergi Roberto", "Right Back");
-    Player team8player3 = new Player(team8, 3, "Jules Koundé", "Center Back");
-    Player team8player4 = new Player(team8, 4, "Gerard Piqué", "Center Back");
-    Player team8player5 = new Player(team8, 5, "Jordi Alba", "Left Back");
-    Player team8player6 = new Player(team8, 6, "Sergio Busquets", "Defensive Midfielder");
-    Player team8player7 = new Player(team8, 7, "Frankie de Jong", "Central Midfielder");
-    Player team8player8 = new Player(team8, 8, "Pedri", "Central Midfielder");
-    Player team8player9 = new Player(team8, 9, "Ousmane Dembélé", "Right Wing");
-    Player team8player10 = new Player(team8, 10, "Robert Lewandowski", "Striker");
-    Player team8player11 = new Player(team8, 11, "Anssumane Fati", "Left Wing");
+    Player team8player1 = new Player(team8, 1, "Marc-Andre ter Stegen", "Goalkeeper");
+    Player team8player2 = new Player(team8, 2, "Pau Cubarsi", "Right Back");
+    Player team8player3 = new Player(team8, 3, "Alejandro Balde", "Left Back");
+    Player team8player4 = new Player(team8, 5, "Inigo Martinez", "Center Back");
+    Player team8player5 = new Player(team8, 23, "Jules Kounde", "Center Back");
+    Player team8player6 = new Player(team8, 8, "Pedri", "Central Midfield");
+    Player team8player7 = new Player(team8, 17, "Marc Casado", "Central Midfield");
+    Player team8player8 = new Player(team8, 9, "Robert Lewandowski", "Striker");
+    Player team8player9 = new Player(team8, 11, "Raphinha", "Right Wing");
+    Player team8player10 = new Player(team8, 19, "Lamine Yamal", "Left Wing");
+    Player team8player11 = new Player(team8, 20, "Dani Olmo", "Attacking Midfield");
 
     public teamPanel() {
         initComponents();
@@ -235,15 +234,6 @@ public class teamPanel extends javax.swing.JPanel {
         playerList8.addPlayer(team8player10);
         playerList8.addPlayer(team8player11);
 
-        team1.addPlayer(playerList1);
-        team2.addPlayer(playerList2);
-        team3.addPlayer(playerList3);
-        team4.addPlayer(playerList4);
-        team5.addPlayer(playerList5);
-        team6.addPlayer(playerList6);
-        team7.addPlayer(playerList7);
-        team8.addPlayer(playerList8);
-
         bst.insert(team1);
         bst.insert(team2);
         bst.insert(team3);
@@ -253,35 +243,15 @@ public class teamPanel extends javax.swing.JPanel {
         bst.insert(team7);
         bst.insert(team8);
 
-    }
+        hash.put(team1.name, playerList1);
+        hash.put(team2.name, playerList2);
+        hash.put(team3.name, playerList3);
+        hash.put(team4.name, playerList4);
+        hash.put(team5.name, playerList5);
+        hash.put(team6.name, playerList6);
+        hash.put(team7.name, playerList7);
+        hash.put(team8.name, playerList7);
 
-    public void setMainFrame(main mainFrame) {
-        this.mainFrame = mainFrame;
-    }
-
-    public void updateTeamTable(PlayerList playerList) {
-        DefaultTableModel model = (DefaultTableModel) teamTable.getModel();
-        model.setRowCount(0); // Tablodaki eski verileri temizle
-
-        if (playerList == null || playerList.head == null) {
-            // Eğer oyuncu listesi boş veya null ise bir uyarı gösterebilirsiniz
-            JOptionPane.showMessageDialog(null, "Oyuncu listesi boş!", "Uyarı", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Oyuncu listesinin başlangıç düğümünü al
-        temp = playerList.head;
-        int i = 0;
-        // Oyuncu listesini dolaş ve tabloya ekle
-        while (temp != null) {
-            teamTable.addRow(new Object[]{temp.player.getPosition(), temp.player.getName()});
-            nameArray[i] = temp.player.getName();
-            positionArray[i] = temp.player.getPosition();
-            ıdArray[i] = temp.player.getPlayerId();
-            goalArray[i] = temp.player.getGoalsScored();
-            temp = temp.next; // Listedeki bir sonraki oyuncuya geç
-            i++;
-        }
     }
 
     public void setTakeTeam(Text.BST.BstNode node) {
@@ -327,8 +297,6 @@ public class teamPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         playerName = new javax.swing.JLabel();
         playerPosition = new javax.swing.JLabel();
-        goalPlayer = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         playerID = new javax.swing.JLabel();
         teamButton = new javax.swing.JButton();
@@ -471,14 +439,6 @@ public class teamPanel extends javax.swing.JPanel {
         playerPosition.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
         playerPosition.setForeground(new java.awt.Color(255, 255, 255));
 
-        goalPlayer.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
-        goalPlayer.setForeground(new java.awt.Color(255, 255, 255));
-
-        jLabel6.setBackground(new java.awt.Color(131, 145, 146));
-        jLabel6.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 77, 102));
-        jLabel6.setText("Goal        :");
-
         jLabel7.setBackground(new java.awt.Color(131, 145, 146));
         jLabel7.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 77, 102));
@@ -495,25 +455,19 @@ public class teamPanel extends javax.swing.JPanel {
                 .addGroup(playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(playerPanelLayout.createSequentialGroup()
-                        .addComponent(goalPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(playerPanelLayout.createSequentialGroup()
-                        .addGroup(playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(playerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(playerPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(playerID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(128, 128, 128))))
+                .addGroup(playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(playerPosition, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(playerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(playerID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         playerPanelLayout.setVerticalGroup(
             playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(playerPanelLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(20, 20, 20)
                 .addGroup(playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(playerPanelLayout.createSequentialGroup()
@@ -521,18 +475,14 @@ public class teamPanel extends javax.swing.JPanel {
                         .addGap(10, 10, 10)
                         .addComponent(playerName, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(playerPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(goalPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(playerPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(playerPanelLayout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -547,8 +497,8 @@ public class teamPanel extends javax.swing.JPanel {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(playerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(playerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 49, Short.MAX_VALUE))
         );
 
         teamButton.setBackground(new java.awt.Color(81, 90, 90));
@@ -587,7 +537,7 @@ public class teamPanel extends javax.swing.JPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teampanelLayout.createSequentialGroup()
-                .addGap(169, 169, 169)
+                .addGap(101, 101, 101)
                 .addComponent(teamName, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(teamButton)
@@ -596,10 +546,13 @@ public class teamPanel extends javax.swing.JPanel {
         teampanelLayout.setVerticalGroup(
             teampanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(teampanelLayout.createSequentialGroup()
-                .addGroup(teampanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(teamButton)
-                    .addComponent(teamName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                .addGroup(teampanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(teampanelLayout.createSequentialGroup()
+                        .addComponent(teamButton)
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teampanelLayout.createSequentialGroup()
+                        .addComponent(teamName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(teampanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(teampanelLayout.createSequentialGroup()
@@ -636,7 +589,7 @@ public class teamPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(teampanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
@@ -654,13 +607,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player1CheckActionPerformed
 
@@ -670,13 +620,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player2CheckActionPerformed
 
@@ -686,13 +633,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player3CheckActionPerformed
 
@@ -702,13 +646,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player4CheckActionPerformed
 
@@ -718,13 +659,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player5CheckActionPerformed
 
@@ -734,13 +672,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player6CheckActionPerformed
 
@@ -750,13 +685,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player7CheckActionPerformed
 
@@ -766,13 +698,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player8CheckActionPerformed
 
@@ -782,13 +711,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player9CheckActionPerformed
 
@@ -798,13 +724,10 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player10CheckActionPerformed
 
@@ -814,36 +737,46 @@ public class teamPanel extends javax.swing.JPanel {
             playerID.setText(Integer.toString(ıdArray[i]));
             playerName.setText(nameArray[i]);
             playerPosition.setText(positionArray[i]);
-            goalPlayer.setText(Integer.toString(goalArray[i]));
         } else {
             playerID.setText("");
             playerName.setText("");
             playerPosition.setText("");
-            goalPlayer.setText("");
-
         }
     }//GEN-LAST:event_player11CheckActionPerformed
 
     private void teamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamButtonActionPerformed
         String name = teamName.getText();
         team = bst.search(name).team;
-
-        tempList = team.getPlayers();
+        tempList = hash.get(team.getName());
         updateTeamTable(tempList);
     }//GEN-LAST:event_teamButtonActionPerformed
+
+    public void updateTeamTable(PlayerList playerList) {
+        DefaultTableModel model = (DefaultTableModel) teamTable.getModel();
+        model.setRowCount(0);
+        temp = playerList.head;
+        int i = 0;
+
+        while (temp != null) {
+            teamTable.addRow(new Object[]{temp.player.getPosition(), temp.player.getPlayerName()});
+            nameArray[i] = temp.player.getPlayerName();
+            positionArray[i] = temp.player.getPosition();
+            ıdArray[i] = temp.player.getPlayerId();
+            goalArray[i] = temp.player.getGoalsScored();
+            temp = temp.next;
+            i++;
+        }
+    }
 
     public JButton getTeamButton() {
         return teamButton;
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Panels.PanelBorder LigPanel;
-    private javax.swing.JLabel goalPlayer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

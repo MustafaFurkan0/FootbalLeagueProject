@@ -7,6 +7,8 @@ public class Team {
     public PlayerList players;
     public int totalPoints;
     public int goalDifference;
+    public int scoreGoal;
+    public int concededGoal;
     public String form;
 
     public Team(String name, int teamId) {
@@ -15,6 +17,8 @@ public class Team {
         this.players = new PlayerList();
         this.totalPoints = 0;
         this.goalDifference = 0;
+        this.concededGoal = 0;
+        this.scoreGoal = 0;
         this.form = "";
     }
 
@@ -22,8 +26,8 @@ public class Team {
         return form;
     }
 
-    public void setForm(String form) {
-        form += form;
+    public void setForm(String form1) {
+        form = form;
     }
 
     public void addPlayer(PlayerList players) {
@@ -31,11 +35,7 @@ public class Team {
     }
 
     public int getGoalDifference() {
-        return goalDifference;
-    }
-
-    public void setGoalDifference(int goal, int goalDifference) {
-        this.goalDifference = goal - goalDifference;
+        return scoreGoal-concededGoal;
     }
 
     public PlayerList getPlayers() {

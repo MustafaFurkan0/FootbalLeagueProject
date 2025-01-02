@@ -1,16 +1,18 @@
 package Text;
 
 import java.util.*;
+import main.*;
 
 public class Match {
 
+    public ArrayList<QueueTeam> queueTeams = new ArrayList<>();
     public Team team1;
     public Team team2;
     public Team form1;
     public Team form2;
+
     int team1Score;
     int team2Score;
-    public ArrayList<QueueTeam> queueTeams = new ArrayList<>();
 
     public Match(Team team1, Team team2) {
         this.team1 = team1;
@@ -39,60 +41,53 @@ public class Match {
 
     }
 
-    // Listeyi bir pozisyon kaydırma
     public void rotateTeams(TeamList teamList) {
         if (teamList.head == null || teamList.head.next == null) {
-            return; // Liste boş veya tek elemanlıysa döndürme işlemi gereksiz
+            return;
         }
 
         Node prev = null;
         Node current = teamList.head;
 
-        // Listenin sonuna kadar ilerle
         while (current.next != null) {
             prev = current;
             current = current.next;
         }
 
-        // Son düğümü başa taşı
         if (prev != null) {
-            prev.next = null; // Son düğümün bağlantısını kopar
+            prev.next = null;
         }
-        current.next = teamList.head; // Son düğümü listenin başına bağla
-        teamList.head = current; // Yeni baş düğümü ayarla
+        current.next = teamList.head;
+        teamList.head = current;
     }
 
-    // Maç simülasyonu: Rastgele gol sayısı
     public void simulate() {
         team1Score = (int) (Math.random() * 4);
         team2Score = (int) (Math.random() * 4);
-
-        // Skorları güncelle
-        team1.goalDifference = team2Score;
-        team2.goalDifference = team1Score;
-
-        // Puanları güncelle
+        team1.scoreGoal += team1Score;
+        team2.scoreGoal += team2Score;
+        team1.concededGoal += team2Score;
+        team2.concededGoal += team1Score; 
+        
         if (team1Score > team2Score) {
             team1.totalPoints += 3;
-            team1.form = "W - ";
-            team2.form = "L - ";
+            team1.form += "W - ";
+            team2.form += "L - ";
 
         } else if (team2Score > team1Score) {
             team2.totalPoints += 3;
-            team1.form = "L - ";
-            team2.form = "W - ";
+            team1.form += "L - ";
+            team2.form += "W - ";
+
         } else {
             team1.totalPoints += 1;
             team2.totalPoints += 1;
-            team1.form = "D - ";
-            team2.form = "D - ";
+            team1.form += "D - ";
+            team2.form += "D - ";
+
         }
-        // Gol sayılarını guncelle
-        team1.setGoalDifference(team1Score, team2Score);
-        team2.setGoalDifference(team2Score, team1Score);
         team1.setForm(team1.form);
         team2.setForm(team2.form);
-
     }
 
     public int getTeam1Score() {

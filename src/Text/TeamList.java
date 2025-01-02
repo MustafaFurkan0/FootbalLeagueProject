@@ -1,7 +1,5 @@
 package Text;
 
-import java.util.*;
-
 public class TeamList {
 
     public Node head;
@@ -9,10 +7,13 @@ public class TeamList {
     public TeamList() {
         this.head = null;
     }
-
+    
+    public Node getHead() {
+        return head;
+    }
     public void addTeam(Team team) {
         Node newNode = new Node(team);
-        if (head == null) { //Liste boşsa ilk elemanı ekleme
+        if (head == null) { 
             head = newNode;
         } else {  //Sona ekleme
             Node temp = head;
@@ -54,7 +55,6 @@ public class TeamList {
         }
     }
 
-    // Takımların toplam sayısını döndürme
     public int size() {
         int count = 0;
         Node current = head;
@@ -77,7 +77,6 @@ public class TeamList {
             currentIndex++;
         }
 
-        // Eğer indeks geçersizse
         throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size());
     }
 
@@ -85,16 +84,13 @@ public class TeamList {
         Node temp = head;
         while (temp != null) {
             if (temp.team.getTeamId() == teamId) {
-                return temp.team;  // ID'ye göre takımı döndür
+                return temp.team;  
             }
             temp = temp.next;
         }
-        return null;  // Takım bulunamazsa null döndür
+        return null;  
     }
 
-    // Takım listesine erişim
-    public Node getHead() {
-        return head;
-    }
+    
 
 }

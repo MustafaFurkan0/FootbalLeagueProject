@@ -3,28 +3,30 @@ package main;
 import Text.*;
 import java.awt.*;
 import javax.swing.*;
-import java.util.*;
+import main.menu;
 
 public class main extends javax.swing.JFrame {
 
     private CardLayout cardLayout;
+    private CardLayout cardLayout1;
     private teamPanel teamPanel;
     private leaguPanel leaguepanel;
-
-    public Hash hashTable;
 
     public main() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
-        menu2.initMoving(main.this);
+        //menu.initMoving(main.this);
         teamPanel = new teamPanel();
         cardLayout = new CardLayout();
+        cardLayout1 = new CardLayout();
+        menuPanel.setLayout(cardLayout1);
+        menuPanel.add(new menu(), "menu");
+        cardLayout1.show(menuPanel, "menu");
         mainPanel.setLayout(cardLayout);
         mainPanel.add(new leaguPanel(), "leaguePanel");
         mainPanel.add(new teamPanel(), "teamPanel");
         cardLayout.show(mainPanel, "leaguePanel");
         backLeague.setVisible(false);
-
     }
 
     public JPanel getMainPanel() {
@@ -50,9 +52,9 @@ public class main extends javax.swing.JFrame {
         searchText = new Text.SearchText();
         teamSearchButton = new javax.swing.JButton();
         quitButton = new javax.swing.JButton();
-        menu2 = new Panels.menu();
         mainPanel = new javax.swing.JPanel();
         backLeague = new javax.swing.JButton();
+        menuPanel = new javax.swing.JPanel();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -127,7 +129,7 @@ public class main extends javax.swing.JFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 966, Short.MAX_VALUE)
+            .addGap(0, 977, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,6 +145,19 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        menuPanel.setBackground(new java.awt.Color(242, 242, 242));
+
+        javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
+        menuPanel.setLayout(menuPanelLayout);
+        menuPanelLayout.setHorizontalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 584, Short.MAX_VALUE)
+        );
+        menuPanelLayout.setVerticalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -150,31 +165,34 @@ public class main extends javax.swing.JFrame {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(backLeague, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelBorder1Layout.createSequentialGroup()
-                            .addComponent(menu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(quitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 85, Short.MAX_VALUE))
+                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                        .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(quitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                                .addGap(388, 388, 388)
+                                .addComponent(backLeague, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(0, 0, 0)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(quitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
-                        .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(menu2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addComponent(backLeague, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                        .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(backLeague, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -189,7 +207,7 @@ public class main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -199,22 +217,22 @@ public class main extends javax.swing.JFrame {
     private void searchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextActionPerformed
 
     }//GEN-LAST:event_searchTextActionPerformed
+    public SearchText getSearchText() {
+        return searchText;
+    }
 
     private void teamSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamSearchButtonActionPerformed
 
-        mainPanel.removeAll(); // mainPanel'i temizle
-        String text = searchText.getText(); // Arama metnini al
-        teamPanel newTeamPanel = new teamPanel(); // Yeni bir TeamPanel oluştur
-
-        newTeamPanel.setTeamName(text); // Arama metnini JLabel'a gönder
+        mainPanel.removeAll();
+        String text = searchText.getText();
+        teamPanel newTeamPanel = new teamPanel();
+        newTeamPanel.setTeamName(text);
         newTeamPanel.getTeamButton().doClick();
-
-        mainPanel.add(newTeamPanel, "teamPanel"); // Yeni paneli ekle
-        mainPanel.repaint(); // Görsel yenileme
-        mainPanel.revalidate(); // Düzeni yeniden yapılandır
-
-        ((CardLayout) mainPanel.getLayout()).show(mainPanel, "teamPanel"); // CardLayout ile göster
-        backLeague.setVisible(true); // Geri butonunu görünür yap
+        mainPanel.add(newTeamPanel, "teamPanel");
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        ((CardLayout) mainPanel.getLayout()).show(mainPanel, "teamPanel");
+        backLeague.setVisible(true);
 
         searchText.setText("");
     }//GEN-LAST:event_teamSearchButtonActionPerformed
@@ -249,16 +267,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JPanel mainPanel;
-    private Panels.menu menu2;
+    private javax.swing.JPanel menuPanel;
     private Panels.PanelBorder panelBorder1;
     private Panels.PanelBorder panelBorder2;
     private javax.swing.JButton quitButton;
     private Text.SearchText searchText;
     private javax.swing.JButton teamSearchButton;
     // End of variables declaration//GEN-END:variables
-
-    public SearchText getSearchText() {
-        return searchText;
-    }
 
 }

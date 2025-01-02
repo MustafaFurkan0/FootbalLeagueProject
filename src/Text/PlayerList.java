@@ -25,13 +25,13 @@ public class PlayerList {
         if (head == null) {
             return;
         }
-        if (head.player.getId() == playerId) {
+        if (head.player.getPlayerId() == playerId) {
             head = head.next;
             return;
         }
 
         Node current = head;
-        while (current.next != null && current.next.player.getId() != playerId) {
+        while (current.next != null && current.next.player.getPlayerId() != playerId) {
             current = current.next;
         }
 
@@ -44,7 +44,7 @@ public class PlayerList {
     public void updatePlayer(int id, String newName, String newPosition, int newGoals) {
         Node current = head;
         while (current != null) {
-            if (current.player.getId() == id) {
+            if (current.player.getPlayerId() == id) {
                 if (newName != null && !newName.isEmpty()) {
                     current.player.playerName = newName;
                 }
@@ -61,4 +61,28 @@ public class PlayerList {
         System.out.println("Oyuncu bulunamadı: " + id);
     }
 
+    public int size() {
+        int count = 0;
+        Node current = head;
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
+
+    public Player get(int index) {
+        int currentIndex = 0;
+        Node current = head;
+
+        while (current != null) {
+            if (currentIndex == index) {
+                return current.player;
+            }
+            current = current.next;
+            currentIndex++;
+        }
+
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size());
+    }
 }

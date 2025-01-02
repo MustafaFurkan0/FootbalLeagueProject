@@ -1,58 +1,41 @@
 package Text;
 
-import java.lang.reflect.Array;
-import java.util.*;
-
 public class Hash {
 
-    TeamList teamList;
     int size;
-    TeamList[] hashTable;
+    PlayerList[] hashTable;
 
     public Hash(int size) {
         this.size = size;
-        hashTable = new TeamList[size];
+        hashTable = new PlayerList[size];
         for (int i = 0; i < size; i++) {
             hashTable[i] = null;
         }
-
     }
 
-    private int hashFunction(int key) {
-        return key % 10;
+    public PlayerList[] getHashTable() {
+        return hashTable;
     }
 
-    public void ekle(int key, TeamList teamList) {
-        int index = hashFunction(key);
-        hashTable[index] = teamList;
-        /*
-        Node newNode = new Node(teamList);
-        // Bağlı listeye ekleme
-        if (hashTable[index] == null) {
-            hashTable[index] = newNode; // Liste boşsa doğrudan ekle
-        } else {
-            Node current = hashTable[index];
-            while (current.next != null) { // Listenin sonuna kadar ilerle
-                current = current.next;
-            }
-            current.next = newNode; // Yeni düğümü sona ekle
+    public void setHashTable(PlayerList[] hashTable) {
+        this.hashTable = hashTable;
+    }
+
+    private int hash(String key) {
+        int hashValue = 0;
+        for (int i = 0; i < key.length(); i++) {
+            hashValue = (hashValue * 31 + key.charAt(i)) % size;
         }
-         */
+        return hashValue;
     }
 
-    public TeamList get(int key) {
-        int index = key % hashTable.length;
+    public void put(String key, PlayerList players) {
+        int index = hash(key);
+        hashTable[index] = players;
+    }
+
+    public PlayerList get(String key) {
+        int index = hash(key);
         return hashTable[index];
     }
-
-    public TeamList hashMethod(TeamList teamList, int weekNumber) {
-        TeamList result = new TeamList();
-
-        int totalTeams = teamList.size();
-        for (int i = weekNumber; i < totalTeams; i++) {
-            result.addTeam(teamList.get(i)); // Belirli indeksi kullanarak takımı al ve ekle
-        }
-        return result;
-    }
-
 }

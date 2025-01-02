@@ -22,7 +22,7 @@ public class QueueTeam {
 
     public Match dequeue() {
         if (front == null) {
-            return null; // Kuyruk boşsa
+            return null;
         }
         Match match = front.match;
         front = front.next;
